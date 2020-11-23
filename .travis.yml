@@ -22,7 +22,7 @@ install:
 script:
   - pylint xslproxy
   - pyflakes src/xslproxy
-  - trial src/xslproxy/test
+  - trial src/xslproxy/test/*.py
 jobs:
   include:
     - stage: publish
