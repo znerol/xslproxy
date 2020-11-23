@@ -1,0 +1,38 @@
+---
+os: linux
+dist: bionic
+language: python
+python:
+  - 3.8
+  - 3.7
+  - 3.6
+cache:
+  directories:
+    - $HOME/.cache/pip
+env:
+  global:
+stages:
+  - name: test
+  - name: publish
+    if: tag IS present
+install:
+  - pip install -U pip wheel
+  - pip install -r test-requirements.txt
+  - pip install -e .
+script:
+  - pylint xslproxy
+  - pyflakes src/xslproxy
+  - trial src/xslproxy/test
+jobs:
+  include:
+    - stage: publish
+      install: skip
+      script: skip
+      deploy:
+        on:
+          all_branches: true
+        provider: pypi
+        distributions: sdist bdist_wheel
+        username: "__token__"
+        password:
+          secure: FIXME
