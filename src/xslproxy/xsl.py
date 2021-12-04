@@ -57,11 +57,11 @@ class XslTransformationReverseProxyResource(resource.Resource):
         }
 
     def getChild(self, paramspec, request):
-        xsls, params = self._parser.parse(paramspec)
+        xsls, paths, params = self._parser.parse(paramspec)
 
         # Load stylesheets
         try:
-            stylesheets = [(key, self._repository.load(key)) for key in xsls]
+            stylesheets = [(key, self._repository.load(paths[key])) for key in xsls]
         except XslRepositoryNoCandidateError:
             return resource.NoResource(
                 "One of the specified stylesheets was not found on the server"
@@ -119,6 +119,16 @@ class XslQueryStringParser:
 
         xsls = [value for name, value in qsl if name == "xsl[]"]
 
+        # Resolve aliases
+        # e.g., xa[my-stylesheet]=path/to/example
+        paths = {}
+        for key in xsls:
+            aliases = [value for name, value in qsl if name == f"xa[{key}]"]
+            if (len(aliases) > 0):
+                paths[key] = aliases[-1]
+            else:
+                paths[key] = key
+
         params = {}
 
         # Parse xpath params
@@ -143,7 +153,7 @@ class XslQueryStringParser:
                 if name.startswith(namepfx)
             ])
 
-        return xsls, params
+        return xsls, paths, params
 
 
 class XslRepositoryError(Exception):

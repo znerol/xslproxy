@@ -51,6 +51,10 @@ pair separated by the ampersand (``&``) character:
 xsl[]
   Relative path to a stylesheet on the server (without ``.xsl`` or ``.xslt``
   extension). This parameter can be specified multiple times.
+xa[stylesheet-key]
+  Stylesheet alias. Relative path to a stylesheet on the server (without
+  ``.xsl`` or ``.xslt``. This parameter is usefull if the same stylesheet should
+  be applied multiple times with different parameters.
 xp[stylesheet-key][param-key]
   XPath parameter with the name ``param-key`` for the stylesheet specified in
   ``stylesheet-key``. The latter need to match one of the values specified via
