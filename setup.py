@@ -2,7 +2,7 @@ from setuptools import setup
 
 setup(
     name="xslproxy",
-    version="1.0.1",
+    version="1.1.0",
     description="Xsl transforming reverse proxy based on twisted",
     long_description=open('README.rst').read(),
     author="Lorenz Schori",
