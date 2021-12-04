@@ -55,7 +55,7 @@ xp[stylesheet-key][param-key]
   XPath parameter with the name ``param-key`` for the stylesheet specified in
   ``stylesheet-key``. The latter need to match one of the values specified via
   ``xsl[]`` parameter.
-xs[stylesheet-key][param-key]
+sp[stylesheet-key][param-key]
   String parameter with the name ``param-key`` for the stylesheet specified in
   ``stylesheet-key``. The latter need to match one of the values specified via
   ``xsl[]`` parameter.
