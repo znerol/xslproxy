@@ -1,9 +1,12 @@
+from urllib.parse import urlsplit
+
 from twisted.application import strports
 from twisted.internet import endpoints, reactor
 from twisted.python import usage
-from twisted.web import resource, server
+from twisted.web import resource
+
+from xslproxy.server import Site
 from xslproxy.xsl import XslRepository, XslTransformationReverseProxyResource
-from urllib.parse import urlsplit
 
 
 class Options(usage.Options):
@@ -37,4 +40,4 @@ def makeService(options):
     root = resource.Resource()
     root.putChild(b"transform", XslTransformationReverseProxyResource(
         repository, backend, hostport, path))
-    return strports.service(options["listen"], server.Site(root))
+    return strports.service(options["listen"], Site(root))
